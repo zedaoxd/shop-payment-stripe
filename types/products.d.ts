@@ -14,13 +14,9 @@ type DummyProduct = {
 type Product = {
     id: string,
     name: string,
-    description?: string,
+    description: string?,
     price: string | number,
     currency: string,
     image: string,
     images?: string[],
-    default_price_data: {
-        unit_amount_decimal: number,
-        currency: string
-    }
 }

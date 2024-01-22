@@ -1,3 +1,9 @@
+import { ProductList } from "@/components/shop/product-list";
+
 export default function Home() {
-  return <div>Home</div>;
+  return (
+    <section className="container">
+      <ProductList />
+    </section>
+  );
 }

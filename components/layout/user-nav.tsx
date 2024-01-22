@@ -7,9 +7,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 export function UserNav() {
   return (
@@ -42,7 +42,13 @@ export function UserNav() {
 
           <DropdownMenuItem>Settings</DropdownMenuItem>
 
-          <DropdownMenuItem>Apply dummy data</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href="/dummy/seed" className="cursor-default">
+              Apply dummy data
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
 
           <DropdownMenuItem>Log out</DropdownMenuItem>
         </DropdownMenuGroup>

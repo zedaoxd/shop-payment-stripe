@@ -30,10 +30,17 @@ async function getProducts() {
 export async function ProductList() {
   const products = await getProducts();
   return (
-    <section>
-      {products?.map((product) => (
-        <ProductCard key={product.id} {...product} />
-      ))}
+    <section className="grid gap-4 m-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {products &&
+        products.map((product) => (
+          <ProductCard
+            key={product.id}
+            description={product.description}
+            image={product.image}
+            name={product.name}
+            price={product.price}
+          />
+        ))}
     </section>
   );
 }

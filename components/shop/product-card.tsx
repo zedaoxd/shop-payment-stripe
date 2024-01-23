@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import {
   Card,
   CardContent,
@@ -9,59 +8,51 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
+import { Button } from "@/components/ui/button";
+import { priceFormater } from "@/utils/formaters";
 import Image from "next/image";
 
 type Props = {
   name: string;
   description: string | null;
-  images?: string[];
+  image: string;
+  price: string | number;
 };
 
-export function ProductCard({ name, description, images }: Props) {
-  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
+export function ProductCard({ name, description, image, price }: Props) {
+  const addToCart = async () => {};
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{name}</CardTitle>
+        <CardTitle className="flex items-center justify-center min-h-[4rem]">
+          {name}
+        </CardTitle>
 
-        <CardDescription>{description}</CardDescription>
+        <CardDescription className="relative w-full h-60">
+          <Image
+            src={image}
+            alt={name}
+            fill
+            sizes="100%"
+            className="object-contain"
+          />
+        </CardDescription>
       </CardHeader>
 
-      <CardContent>
-        <Carousel
-          plugins={[plugin]}
-          className="w-full max-w-xs"
-          onMouseEnter={plugin.current.stop}
-          onMouseLeave={plugin.current.reset}
-        >
-          <CarouselContent>
-            {images?.map((image, index) => (
-              <CarouselItem key={index}>
-                <div className="p-1">
-                  <Image src={image} alt={name} width={400} height={400} />
-                  {index}
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-
-          <CarouselPrevious />
-
-          <CarouselNext />
-        </Carousel>
+      <CardContent className="relative w-full">
+        <p className="min-h-[6rem]">{description}</p>
       </CardContent>
 
-      <CardFooter>
-        <p>Card Footer</p>
+      <CardFooter className="flex items-center justify-between">
+        <div>
+          <p>Preço</p>
+          <p>{priceFormater(Number(price))}</p>
+        </div>
+
+        <Button size="lg" onClick={addToCart}>
+          Comprar
+        </Button>
       </CardFooter>
     </Card>
   );

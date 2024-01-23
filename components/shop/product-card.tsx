@@ -9,18 +9,42 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { priceFormater } from "@/utils/formaters";
 import Image from "next/image";
+import { formatCurrencyString, useShoppingCart } from "use-shopping-cart";
+import { toast } from "../ui/use-toast";
 
 type Props = {
   name: string;
   description: string | null;
   image: string;
   price: string | number;
+  id: string;
 };
 
-export function ProductCard({ name, description, image, price }: Props) {
-  const addToCart = async () => {};
+export function ProductCard({ id, name, description, image, price }: Props) {
+  const { addItem } = useShoppingCart();
+
+  const formattedPrice = formatCurrencyString({
+    value: Number(price),
+    currency: "BRL",
+    language: "pt-BR",
+  });
+
+  const addToCart = async () => {
+    addItem({
+      currency: "BRL",
+      id,
+      name,
+      price: Number(price),
+      description: description ?? "Sem descrição",
+      image,
+    });
+
+    toast({
+      title: "Produto adicionado ao carrinho",
+      description: `O produto ${name} foi adicionado ao carrinho`,
+    });
+  };
 
   return (
     <Card>
@@ -47,7 +71,7 @@ export function ProductCard({ name, description, image, price }: Props) {
       <CardFooter className="flex items-center justify-between">
         <div>
           <p>Preço</p>
-          <p>{priceFormater(Number(price))}</p>
+          <p>{formattedPrice}</p>
         </div>
 
         <Button size="lg" onClick={addToCart}>
